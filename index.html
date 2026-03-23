@@ -316,7 +316,6 @@ const LOWER_CABS = [
 let items = [];        // { el, type:'door'|'drawer', isOpen, baseTop(drawers) }
 let score = 0;
 let lives = 3;
-let level = 1;
 let gameRunning = false;
 let openInterval = null;
 let penaltyInterval = null;
@@ -350,7 +349,6 @@ function buildKitchen() {
     kitchen.appendChild(cab);
   });
 
-  const lowerHeight = COUNTER_Y - (KITCHEN_H * 0.06 + KITCHEN_H * 0.36) * 0; // full base
   // lower cabs sit directly below countertop
   const lowerBottom = COUNTER_Y; // top of countertop
   const lowerTop    = lowerBottom - KITCHEN_H * 0.28;
