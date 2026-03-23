@@ -161,22 +161,27 @@
     /* ── DRAWER ─────────────────────────────────────────── */
     .drawer-panel {
       position: absolute;
-      background: #cd853f;
+      background: linear-gradient(180deg, #d4a056, #cd853f 40%, #c07830);
       border: 2px solid #8b4513;
       border-radius: 3px;
       left: 4px; right: 4px;
       cursor: pointer;
       user-select: none;
-      transition: top .25s ease;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1;
     }
     .drawer-panel:hover { filter: brightness(1.12); }
     .drawer-panel.open {
-      /* pushed down = pulled out; actual offset set inline via JS */
-      background: #b8732e;
-      box-shadow: 0 4px 8px rgba(0,0,0,.3);
+      transform: perspective(500px) translateY(6px) translateZ(16px) rotateX(-3deg);
+      background: linear-gradient(180deg, #c07830, #b8732e 40%, #a86820);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,.45),
+        0 2px 6px rgba(0,0,0,.25),
+        inset 0 4px 8px rgba(0,0,0,.35);
+      border-color: #6b3000;
       z-index: 2;
     }
     .drawer-handle {
@@ -323,8 +328,8 @@ let gameRunning = false;
 let openInterval = null;
 let penaltyInterval = null;
 let baseDelay = 1800;  // ms between random openings
-let minDelay   = 350;
-let speedStep  = 80;   // decrease per opened item
+let minDelay   = 500;
+let speedStep  = 30;   // decrease per closed item
 let currentDelay = baseDelay;
 
 const kitchen    = document.getElementById('kitchen');
@@ -445,23 +450,13 @@ function openRandomItem() {
 
 function openItem(it) {
   it.isOpen = true;
-  if (it.type === 'door') {
-    it.el.classList.add('open');
-  } else {
-    it.el.style.top = (it.baseTop + it.openOffset) + 'px';
-    it.el.classList.add('open');
-  }
+  it.el.classList.add('open');
 }
 
 function closeItem(it) {
   if (!it || !it.isOpen) return;
   it.isOpen = false;
-  if (it.type === 'door') {
-    it.el.classList.remove('open');
-  } else {
-    it.el.style.top = it.baseTop + 'px';
-    it.el.classList.remove('open');
-  }
+  it.el.classList.remove('open');
 
   // Score
   score += 10;
