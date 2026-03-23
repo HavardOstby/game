@@ -175,6 +175,8 @@
     .drawer-panel:hover { filter: brightness(1.12); }
     .drawer-panel.open {
       /* pushed down = pulled out; actual offset set inline via JS */
+      background: #b8732e;
+      box-shadow: 0 4px 8px rgba(0,0,0,.3);
     }
     .drawer-handle {
       width: 40%;
@@ -392,12 +394,12 @@ function addDoors(cab, count, availH, cabId, tier, topOffset = 4) {
   for (let i = 0; i < count; i++) {
     const door = document.createElement('div');
     door.className = 'door-panel';
+    door.style.inset  = 'unset'; // override CSS inset first
     door.style.top    = topOffset + 'px';
     door.style.bottom = '4px';
     door.style.left   = (4 + i * (panelW + 4)) + 'px';
     door.style.width  = panelW + 'px';
     door.style.right  = 'auto';
-    door.style.inset  = 'unset'; // override inset
 
     const handle = document.createElement('div');
     handle.className = 'handle';
